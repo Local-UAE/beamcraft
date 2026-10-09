@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    {
+      "slug": "beamng-drive",
+      "role": "primary"
+    },
+    {
+      "slug": "minecraft-java",
+      "role": "companion"
+    }
+  ],
+  "components": [
+    {
+      "id": "main",
+      "fileName": "BeamCraft-Melty-v0.1.0.zip",
+      "label": "BeamCraft",
+      "kind": "main",
+      "required": true
+    }
+  ],
+  "requirements": [],
+  "mappings": [
+    {
+      "component": "main",
+      "from": "BeamNG/",
+      "to": "{localappdata}/BeamCraft/bng-userfolder/current"
+    },
+    {
+      "component": "main",
+      "from": "Prism/",
+      "to": "{localappdata}/BeamCraft/Prism"
+    },
+    {
+      "component": "main",
+      "from": "",
+      "to": "{managed}"
+    }
+  ],
+  "launch": {
+    "kind": "exe",
+    "path": "{game}/BeamNG.drive.exe",
+    "args": [
+      "-userpath",
+      "{localappdata}/BeamCraft/bng-userfolder",
+      "-level",
+      "smallgrid",
+      "-vehicle",
+      "pickup"
+    ]
+  },
+  "together": [
+    {
+      "launch": {
+        "kind": "exe",
+        "path": "{localappdata}/BeamCraft/Prism/prismlauncher.exe",
+        "args": [
+          "--launch",
+          "BeamCraft"
+        ]
+      },
+      "waitSeconds": 8
+    }
+  ],
+  "setup": {
+    "label": "Minecraft",
+    "launch": {
+      "kind": "exe",
+      "path": "{localappdata}/BeamCraft/Prism/prismlauncher.exe",
+      "args": [
+        "--launch",
+        "BeamCraft"
+      ]
+    },
+    "done": {
+      "file": "{localappdata}/BeamCraft/Prism/instances/BeamCraft/.minecraft/logs/latest.log",
+      "contains": "Backend library:"
+    }
+  },
+  "runtimeData": [
+    "{localappdata}/BeamCraft"
+  ]
+}
