@@ -3,8 +3,17 @@
 # certain platforms or Java versions, and provides a first line of defence
 # against bad commits.
 
-name: build
-on: [pull_request, push]
+name: build-and-release
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -36,3 +45,51 @@ jobs:
           path: |
             build/libs/*.jar
             beamng/minecraft/build/libs/*.jar
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: checkout tagged source
+        uses: actions/checkout@v6
+      - name: download build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: Artifacts
+          path: artifacts
+      - name: package release
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          directory="BeamCraft-${tag}"
+          mkdir -p "release/${directory}"
+          git archive "${GITHUB_SHA}" | tar -x -C "release/${directory}"
+          jar="$(find artifacts -type f -path '*/beamng/minecraft/build/libs/bng-bridge-*.jar' ! -name '*-sources.jar' -print -quit)"
+          test -n "${jar}"
+          cp "${jar}" "release/${directory}/"
+          cp "${jar}" "release/bng-bridge-${tag}.jar"
+          (cd release && zip -qr "../BeamCraft-${tag}.zip" "${directory}")
+      - name: publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: BeamCraft ${{ github.ref_name }} (Beta)
+          prerelease: true
+          body: |
+            BeamCraft beta release for Windows. Own and install both BeamNG.drive and Minecraft.
+
+            ## Downloads
+            - `BeamCraft-${{ github.ref_name }}.zip`: complete project source and the built Fabric mod JAR. Extract it and start with `play.bat`.
+            - `bng-bridge-${{ github.ref_name }}.jar`: Fabric mod JAR by itself; the BeamNG extension and launcher scripts are in the complete project ZIP.
+
+            ## Tested setup
+            - BeamNG.drive 0.39.4
+            - Minecraft 1.21.1 with Fabric
+            - Single-player only; do not use on BeamMP or other multiplayer servers.
+            - G923 H-shifter and clutch work in-game. Wheel support is experimental, force feedback is not implemented, and the rendered steering wheel stays static.
+          files: |
+            BeamCraft-${{ github.ref_name }}.zip
+            release/bng-bridge-${{ github.ref_name }}.jar
