@@ -53,8 +53,7 @@ tests and mock bridge are documented in [`beamng/README.md`](beamng/README.md).
 
 The mod builds and its Java tests pass. Car rendering, driving, crash deformation and G923
 H-shifter/clutch operation have been tested with BeamNG.drive 0.39.4 and Minecraft 1.21.1.
-The current crossover is Windows-only and single-player. Do not connect it to BeamMP or other
-multiplayer servers. Multiplayer may be considered separately; it is not part of this release.
+BeamCraft is a Windows-only experience for one player on one PC.
 
 No BeamNG or Minecraft game assets are included. The game exporter reads car data from the local
 BeamNG installation at runtime. You must own and install both BeamNG.drive and Minecraft to play.
@@ -63,5 +62,5 @@ and [`beamng/LICENSE`](beamng/LICENSE) for the imported code's
 MIT license and attribution. The original BeamCraft prototype's root [`LICENSE`](LICENSE)
 is CC0; that does not replace or remove the separate notices and license for the imported implementation.
 
-This is a fan project and is not affiliated with BeamNG GmbH, Mojang or Microsoft. It has not been
-published to Melty.
+This is a fan project and is not affiliated with BeamNG GmbH, Mojang or Microsoft. Releases are
+distributed through GitHub.

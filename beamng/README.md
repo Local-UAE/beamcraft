@@ -106,7 +106,7 @@ when Minecraft is closed.
 
 ## Caveats
 
-- Single player only. Never connect a modded game to BeamMP servers.
+- Designed for one player on one PC; shared/network play is not supported.
 - While Minecraft is connected the extension holds BeamNG's background frame limit at 120 so
   BeamNG keeps running smoothly behind Minecraft (`-mccrossfps N` changes it) and restores your
   setting afterwards.

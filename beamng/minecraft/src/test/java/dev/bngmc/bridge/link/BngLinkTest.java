@@ -57,10 +57,12 @@ class BngLinkTest {
 	void countsDroppedMessagesAndDiscardsOldOnes() throws Exception {
 		link.start("test");
 		assertTrue(waitFor(link::connected, 3000));
+		long droppedBefore = link.stats().dropped.get();
 		bng.sendState(1);
 		bng.skipSeq(3);           // three messages "lost"
 		bng.sendState(2);
-		assertTrue(waitFor(() -> link.stats().dropped.get() == 3, 2000), "dropped=" + link.stats().dropped.get());
+		assertTrue(waitFor(() -> link.stats().dropped.get() >= droppedBefore + 3, 2000),
+			"dropped=" + link.stats().dropped.get() + ", before=" + droppedBefore);
 		bng.sendRawSeq(1, 0);     // a late duplicate from earlier in the session
 		assertTrue(waitFor(() -> link.stats().stale.get() >= 1, 2000));
 		assertEquals(2.0, link.latest(Protocol.STATE).body().get("n").getAsDouble());

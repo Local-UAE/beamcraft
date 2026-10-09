@@ -76,19 +76,19 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          name: BeamCraft ${{ github.ref_name }} (Beta)
-          prerelease: true
+          name: BeamCraft ${{ github.ref_name }}
+          prerelease: ${{ contains(github.ref_name, '-') }}
           body: |
-            BeamCraft beta release for Windows. Own and install both BeamNG.drive and Minecraft.
+            BeamCraft release for Windows. BeamCraft is a one-player experience that runs on a single PC. You must own and install both BeamNG.drive and Minecraft.
 
             ## Downloads
-            - `BeamCraft-${{ github.ref_name }}.zip`: complete project source and the built Fabric mod JAR. Extract it and start with `play.bat`.
-            - `bng-bridge-${{ github.ref_name }}.jar`: Fabric mod JAR by itself; the BeamNG extension and launcher scripts are in the complete project ZIP.
+            - `BeamCraft-${{ github.ref_name }}.zip`: complete project and built Fabric mod. Extract it and launch with `play.bat`; the launcher sets up and starts the local game components.
+            - `bng-bridge-${{ github.ref_name }}.jar`: the Fabric mod by itself. For the complete launcher and BeamNG extension, use the project ZIP.
 
             ## Tested setup
             - BeamNG.drive 0.39.4
             - Minecraft 1.21.1 with Fabric
-            - Single-player only; do not use on BeamMP or other multiplayer servers.
+            - One player on one PC; shared/network play is not supported.
             - G923 H-shifter and clutch work in-game. Wheel support is experimental, force feedback is not implemented, and the rendered steering wheel stays static.
           files: |
             BeamCraft-${{ github.ref_name }}.zip
