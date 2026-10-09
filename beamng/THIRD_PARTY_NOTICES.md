@@ -12,6 +12,13 @@ The Minecraft mod builds against Fabric Loader, Fabric API and Loom (Apache-2.0)
 (Mojang's EULA; not redistributed). Nothing from Minecraft or BeamNG.drive is included in this
 repository.
 
+## Melty companion package
+
+The optional Melty package bundles an unmodified portable Prism Launcher (GPL-3.0) and
+Fabric API (Apache-2.0) alongside BeamCraft. Their license texts are included in the package.
+Prism Launcher downloads Minecraft, Fabric Loader, and Java from their official providers after
+the player signs in with a Microsoft account that owns Minecraft: Java Edition.
+
 ## Mods downloaded at run time
 
 `scripts/run-minecraft.ps1` and Gradle download these on your PC from Modrinth (pinned versions,

@@ -36,6 +36,14 @@ For a normal Minecraft map, choose mode **2** or run `play.bat terrain`. For det
 custom maps, car mods, troubleshooting and the alternate mode, see
 [`beamng/README.md`](beamng/README.md).
 
+## Melty companion package
+
+The CI release builds `BeamCraft-Melty-<version>.zip`. It contains a portable Prism Launcher
+instance configured for Minecraft 1.21.1 and Fabric Loader 0.19.5, the BeamCraft mod, Fabric API,
+and the BeamNG extension. On first setup, players sign in through Prism with a Microsoft account
+that owns Minecraft: Java Edition; Prism downloads Minecraft, Fabric Loader, and Java from their
+official providers. This package does not include either game's files or assets.
+
 ## Build and tests
 
 With a JDK 21 installed:

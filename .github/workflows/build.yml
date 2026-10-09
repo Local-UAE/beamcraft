@@ -38,6 +38,14 @@ jobs:
       - name: test BeamNG crossover
         working-directory: beamng/minecraft
         run: ./gradlew build
+      - name: package Melty companion files
+        shell: bash
+        run: |
+          version="$(sed -n 's/^version=//p' beamng/minecraft/gradle.properties | head -n 1)"
+          test -n "${version}"
+          pwsh -NoProfile -File beamng/scripts/build-melty-package.ps1 \
+            -BridgeJar "beamng/minecraft/build/libs/bng-bridge-${version}.jar" \
+            -OutputDirectory melty-release
       - name: capture build artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -45,6 +53,7 @@ jobs:
           path: |
             build/libs/*.jar
             beamng/minecraft/build/libs/*.jar
+            melty-release/*.zip
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
@@ -71,6 +80,9 @@ jobs:
           test -n "${jar}"
           cp "${jar}" "release/${directory}/"
           cp "${jar}" "release/bng-bridge-${tag}.jar"
+          melty_zip="$(find artifacts -type f -name 'BeamCraft-Melty-v*.zip' -print -quit)"
+          test -n "${melty_zip}"
+          cp "${melty_zip}" "release/BeamCraft-Melty-${tag}.zip"
           (cd release && zip -qr "../BeamCraft-${tag}.zip" "${directory}")
       - name: publish GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -84,6 +96,7 @@ jobs:
             ## Downloads
             - `BeamCraft-${{ github.ref_name }}.zip`: complete project and built Fabric mod. Extract it and launch with `play.bat`; the launcher sets up and starts the local game components.
             - `bng-bridge-${{ github.ref_name }}.jar`: the Fabric mod by itself. For the complete launcher and BeamNG extension, use the project ZIP.
+            - `BeamCraft-Melty-${{ github.ref_name }}.zip`: portable Prism companion package with the Fabric instance, Fabric API, BeamCraft mod, and BeamNG extension. Microsoft sign-in is required once; game files are downloaded from their official providers.
 
             ## Tested setup
             - BeamNG.drive 0.39.4
@@ -93,3 +106,4 @@ jobs:
           files: |
             BeamCraft-${{ github.ref_name }}.zip
             release/bng-bridge-${{ github.ref_name }}.jar
+            release/BeamCraft-Melty-${{ github.ref_name }}.zip
