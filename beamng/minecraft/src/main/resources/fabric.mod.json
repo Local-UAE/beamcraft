@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "bngbridge",
+	"version": "${version}",
+	"name": "BeamNG Crossover Bridge",
+	"description": "Runs Minecraft gameplay inside a live BeamNG.drive world.",
+	"authors": ["JASGENIUS", "justbustin (upstream minecraft-crossover-bridge)"],
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.bngmc.bridge.BngBridgeMod"],
+		"client": ["dev.bngmc.bridge.client.BngBridgeClient"]
+	},
+	"mixins": [
+		"bngbridge.mixins.json",
+		{
+			"config": "bngbridge.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

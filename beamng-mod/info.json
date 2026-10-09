@@ -1,0 +1,6 @@
+{
+  "name": "BeamCraft Bridge",
+  "author": "BeamCraft",
+  "version": "0.1.0",
+  "description": "Read-only localhost telemetry bridge for BeamCraft and Minecraft."
+}

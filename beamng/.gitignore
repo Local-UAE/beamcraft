@@ -1,0 +1,17 @@
+# Build output
+/native/build/
+/native/out/
+/minecraft/build/
+/minecraft/.gradle/
+/minecraft/run/
+/minecraft/logs/
+
+# Logs and captures from test runs
+/logs/
+*.log
+/captures/
+/demo-out/
+
+# Python
+__pycache__/
+*.pyc

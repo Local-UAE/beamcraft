@@ -1,0 +1,102 @@
+plugins {
+	id 'fabric-loom' version "${loom_version}"
+}
+
+base {
+	archivesName = 'bng-bridge'
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"bngbridge" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+
+	runs {
+		client {
+			// -PmcUser / -PbngSkin come from minecraft/run/bngbridge-local.properties via run-minecraft.ps1
+			programArgs '--username', (project.findProperty('mcUser') ?: 'Steve')
+			def skin = project.findProperty('bngSkin')
+			if (skin) {
+				vmArg "-Dbngbridge.skin=${skin}"
+			}
+			// scripts/run-minecraft.ps1 passes -PmcWindow=x,y,w,h, -PbngPort=N and -PbngMode=bridge|host
+			def win = project.findProperty('mcWindow')
+			if (win) {
+				vmArg "-Dbngbridge.window=${win}"
+			}
+			def port = project.findProperty('bngPort')
+			if (port) {
+				vmArg "-Dbngbridge.port=${port}"
+			}
+			def world = project.findProperty('bngWorld')
+			if (world) {
+				vmArg "-Dbngbridge.world=${world}"
+			}
+			def mode = project.findProperty('bngMode')
+			if (mode) {
+				vmArg "-Dbngbridge.mode=${mode}"
+			}
+		}
+	}
+}
+
+repositories {
+	mavenCentral()
+	// Sodium and Iris (shader packs) for the dev client; scripts/run-minecraft.ps1 -NoShaderMods leaves them out
+	exclusiveContent {
+		forRepository { maven { url = 'https://api.modrinth.com/maven' } }
+		filter { includeGroup 'maven.modrinth' }
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	if (!project.hasProperty('noShaderMods')) {
+		// through Loom, not run/mods: Iris's mixins need Loom's remapping in a dev environment
+		modRuntimeOnly 'maven.modrinth:sodium:mc1.21.1-0.6.13-fabric'
+		modRuntimeOnly 'maven.modrinth:iris:1.8.8+1.21.1-fabric'
+		// the libraries Iris carries inside its jar, which a dev environment doesn't unpack
+		runtimeOnly 'org.antlr:antlr4-runtime:4.13.1'
+		runtimeOnly 'io.github.douira:glsl-transformer:2.0.1'
+		runtimeOnly 'org.anarres:jcpp:1.4.14'
+	}
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+	it.options.encoding = 'UTF-8'
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events 'failed'
+		exceptionFormat 'full'
+	}
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}

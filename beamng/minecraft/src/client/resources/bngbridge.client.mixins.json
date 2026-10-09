@@ -1,0 +1,24 @@
+{
+	"required": true,
+	"package": "dev.bngmc.bridge.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"AbstractClientPlayerMixin",
+		"CameraMixin",
+		"ControlifyInGameMixin",
+		"ControlifyMovementMixin",
+		"EntityRenderDispatcherMixin",
+		"FogRendererMixin",
+		"GameRendererMixin",
+		"GuiMixin",
+		"LevelRendererMixin",
+		"MinecraftMixin",
+		"RenderSystemMixin",
+		"RenderTargetMixin",
+		"ScreenMixin",
+		"WindowMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

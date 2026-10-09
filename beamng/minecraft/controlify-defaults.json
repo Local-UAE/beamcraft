@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "hd_haptic": {
+        "enabled": true
+      },
+      "gyro": {
+        "invert_yaw": false,
+        "button_mode": "on",
+        "yaw_mode": "yaw",
+        "flick_stick": false,
+        "look_sensitivity": 0.0,
+        "relative_mode": false,
+        "invert_pitch": false
+      },
+      "bluetooth_device": {
+        "dont_show_warning": false
+      },
+      "generic": {
+        "disable_fly_drifting": false,
+        "guide": {
+          "verbosity": "full",
+          "show_ingame_guide": false,
+          "ingame_guide_bottom": false,
+          "show_screen_guides": true
+        },
+        "keyboard": {
+          "show_on_screen_keyboard": true,
+          "hint_cursor": false,
+          "hint_command_suggester": true,
+          "hint_sign_line": true
+        },
+        "auto_jump": false,
+        "toggle_sprint": true,
+        "toggle_sneak": true
+      },
+      "input": {
+        "radial_menu": {
+          "actions": [
+            "controlify:toggle_hud_visibility",
+            "controlify:change_perspective",
+            "controlify:drop_stack",
+            "controlify:open_chat",
+            "controlify:swap_hands",
+            "controlify:pick_block",
+            "controlify:take_screenshot",
+            "controlify:show_player_list"
+          ],
+          "button_focus_timeout_ticks": 20
+        },
+        "button_activation_threshold": 0.5,
+        "keep_default_bindings": false,
+        "bindings": {
+          "controlify:prev_slot": {
+            "axis": "controlify:axis/left_trigger"
+          },
+          "controlify:sneak": {
+            "button": "controlify:button/east"
+          },
+          "controlify:attack": {
+            "button": "controlify:button/right_shoulder"
+          },
+          "controlify:next_slot": {
+            "axis": "controlify:axis/right_trigger"
+          },
+          "controlify:use": {
+            "button": "controlify:button/left_shoulder"
+          },
+          "controlify:jump": {
+            "button": "controlify:button/right_stick"
+          }
+        },
+        "sensitivity": {
+          "is_lce": false,
+          "default_deadzone": 0.12,
+          "reduce_aiming": true,
+          "look_curve": "standard",
+          "horizontal": 1.45,
+          "vertical": 1.0,
+          "vertical_invert": false,
+          "virtual_mouse": 1.0
+        }
+      },
+      "rumble": {
+        "enabled": true
+      }
+    }
+  ],
+  "global": {
+    "keyboard_movement": false,
+    "keyboard_movement_whitelist": [],
+    "seen_servers": [],
+    "show_splitscreen_ad": true,
+    "notify_low_battery": true,
+    "ingame_button_guide_scale": 1.0,
+    "use_enhanced_steam_deck_driver": true,
+    "reach_around": "singleplayer_only",
+    "allow_server_rumble": true,
+    "extra_ui_sounds": true,
+    "virtual_mouse_screens": [
+      "net.minecraft.client.gui.screens.inventory.AbstractContainerScreen"
+    ],
+    "mixed_input": false,
+    "out_of_focus_input": false
+  },
+  "devices": {}
+}

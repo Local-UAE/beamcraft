@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "beamcraft",
+	"version": "${version}",
+	"name": "BeamCraft",
+	"description": "Solo creative Minecraft prototype with a read-only live BeamNG.drive telemetry bridge.",
+	"license": "UNLICENSED",
+	"icon": "assets/beamcraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.beamcraft.BeamCraftMod"
+		],
+		"client": [
+			"com.beamcraft.client.BeamCraftClient"
+		]
+	},
+	"mixins": [
+		"beamcraft.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
